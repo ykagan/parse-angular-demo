@@ -10,10 +10,10 @@ module.exports = (grunt)->
   grunt.registerTask('test:browsers', [ 'karma:browsers', 'server' ])
 
   # Clean, validate & compile web-accessible resources
-  grunt.registerTask('build', [ 'clean', 'copy', 'ngtemplates', 'compass:prod' ])
+  grunt.registerTask('build', [ 'clean', 'copy', 'ngtemplates'])
 
   # Optimize pre-built, web-accessible resources for production, primarily `usemin`
-  grunt.registerTask('optimize', [ 'useminPrepare', 'concat', 'replace:dist', 'uglify', 'compass:prod', 'mincss', 'rev', 'usemin' ])
+  grunt.registerTask('optimize', [ 'useminPrepare', 'concat', 'replace:dist', 'uglify','mincss', 'rev', 'usemin' ])
 
   grunt.registerTask('prod', ['build', 'optimize']);
 
@@ -117,13 +117,8 @@ module.exports = (grunt)->
       unit:
         singleRun:  true
 
-    compass:
-      prod:
-        # http://compass-style.org/help/tutorials/configuration-reference/#configuration-properties
-        options:
-          sassDir: '<%= CLIENT_DIR %>/app/styles',
-          cssDir: '<%= BUILD_DIR %>/app/styles'
-
+   
+        
     # Minify app `.css` resources -> `.min.css`
     mincss:
       app:
@@ -137,7 +132,6 @@ module.exports = (grunt)->
     # Ability to run `jshint` without errors terminating the development server
     parallel:
       less:         [ grunt: true, args: [ 'less' ] ]
-      compass:         [ grunt: true, args: [ 'compass' ] ]
       jshint:       [ grunt: true, args: [ 'jshint' ] ]
 
     # "watch" distinct types of files and re-prepare accordingly
@@ -152,9 +146,6 @@ module.exports = (grunt)->
         files:      '<%= CLIENT_DIR + JS_FILES %>'
         tasks:      [ 'copy:js', 'parallel:jshint' ]
 
-      compass:
-        files:      '<%= CLIENT_DIR + SASS_FILES %>'
-        tasks:      [ 'compass' ]
 
       # Changes to server-side code should validate, restart the server, & refresh the browser
       server:
@@ -203,7 +194,7 @@ module.exports = (grunt)->
             removeAttributeQuotes:          true,
             removeComments:                 true, # Only if you don't use comment directives!
             removeEmptyAttributes:          true,
-            removeRedundantAttributes:      true
+            removeRedundantAttributes:      true,
             removeScriptTypeAttributes:     true,
             removeStyleLinkTypeAttributes:  true
 
@@ -233,7 +224,6 @@ module.exports = (grunt)->
   grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-contrib-jshint')
   grunt.loadNpmTasks('grunt-contrib-less')
-  grunt.loadNpmTasks('grunt-contrib-compass')
   grunt.loadNpmTasks('grunt-contrib-mincss')
   grunt.loadNpmTasks('grunt-contrib-uglify')
   grunt.loadNpmTasks('grunt-express-server')
